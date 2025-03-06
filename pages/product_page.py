@@ -13,3 +13,11 @@ class ProductPage(BasePage):
         assert price in cart_price, "Стоимость корзины не совпадает с ценой товара!"
         message = self.browser.find_element(*ProductPageLocators.MESSAGE_LINK).text
         assert book_name == message , "Книга не добавлена!"        
+        
+        
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_LINK), "Success message is present, but should not be"    
+        
+        
+    def success_message_should_dissapear(self):
+        assert self.is_disappeared(*ProductPageLocators.MESSAGE_LINK), "Success message is present, but should dissapear"    
