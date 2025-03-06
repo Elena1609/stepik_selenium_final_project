@@ -1,20 +1,15 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
 
-class ProductPage(BasePage):
-    
-    def find_price_and_name(self):
-        self.price = self.browser.find_element(*ProductPageLocators.PRICE_LINK).text
-        self.book_name = self.browser.find_element(*ProductPageLocators.BOOK_NAME_LINK).text
+class ProductPage(BasePage):    
     
     def add_product_to_basket(self):
+        price = self.browser.find_element(*ProductPageLocators.PRICE_LINK).text
+        book_name = self.browser.find_element(*ProductPageLocators.BOOK_NAME_LINK).text
         cart_link = self.browser.find_element(*ProductPageLocators.CART_LINK)
         cart_link.click()
-    
-    def check_price(self):
+        self.solve_quiz_and_get_code()
         cart_price = self.browser.find_element(*ProductPageLocators.CART_PRICE_LINK).text
-        assert self.price in cart_price, "Стоимость корзины не совпадает с ценой товара!"    
-        
-    def check_name(self):
+        assert price in cart_price, "Стоимость корзины не совпадает с ценой товара!"
         message = self.browser.find_element(*ProductPageLocators.MESSAGE_LINK).text
-        assert self.book_name == message , "Книга не добавлена!"
+        assert book_name == message , "Книга не добавлена!"        
